@@ -6,11 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Mikayla Noh">
-<meta name="dcterms.date" content="2023-03-06">
-<meta name="description" content="Testing Quarto">
 
-<title>mikaylasblog - First File</title>
+<title>mikaylasblog – first_file</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,6 +121,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -166,46 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">First File</h1>
-                  <div>
-        <div class="description">
-          Testing Quarto
-        </div>
-      </div>
-                </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Mikayla Noh </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">March 6, 2023</p>
-      </div>
-    </div>
-    
-      <div>
-      <div class="quarto-title-meta-heading">Modified</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date-modified">March 6, 2023</p>
-      </div>
-    </div>
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -214,21 +175,400 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-
+<section id="description-of-data" class="level2">
+<h2 class="anchored" data-anchor-id="description-of-data">Description of data</h2>
+<p>I will be using Spotify’s API data to address people’s preference on happier or sadder music across the globe, and whether music influences people’s mental health.</p>
+<p><strong><a href="https://developer.spotify.com/dashboard/login">Spotify API data</a></strong> This data provides information on music artists, tracks, audio features, and various song attributes from the Spotify Data Catalouge. My motivation for looking at this data is to see what songs are most globally popular, and what the audio features of these popular songs are like.</p>
+</section>
+<section id="exploring-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-data">Exploring the data</h2>
+<p>Since we are getting data from the web, Spotify’s API, I went to https://developer.spotify.com/dashboard/login and got my credentials to access the data.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">+</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>4</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spotipy</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spotipy.oauth2 <span class="im">import</span> SpotifyClientCredentials</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spotify_key</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sp <span class="op">=</span> spotipy.Spotify(auth_manager<span class="op">=</span>SpotifyClientCredentials(client_id<span class="op">=</span>spotify_key.CLIENT_ID,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                                                           client_secret<span class="op">=</span>spotify_key.CLIENT_SECRET))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="top-songs---global-playlist" class="level3">
+<h3 class="anchored" data-anchor-id="top-songs---global-playlist">Top Songs - Global Playlist</h3>
+<p>I am interested in what songs are the most popular globally, so I focused on the “Top Songs - Global” playlist which is curated by Spotify already.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>playlist_link <span class="op">=</span> <span class="st">"https://open.spotify.com/playlist/37i9dQZEVXbNG2KDcFcKOF?si=1333723a6eff4b7f"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>playlist_URI <span class="op">=</span> playlist_link.split(<span class="st">"/"</span>)[<span class="op">-</span><span class="dv">1</span>].split(<span class="st">"?"</span>)[<span class="dv">0</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>track_uris <span class="op">=</span> [x[<span class="st">"track"</span>][<span class="st">"uri"</span>] <span class="cf">for</span> x <span class="kw">in</span> sp.playlist_tracks(playlist_URI)[<span class="st">"items"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>artist_name <span class="op">=</span> []</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>track_name <span class="op">=</span> []</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>popularity <span class="op">=</span> []</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>track_id <span class="op">=</span> []</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>artist_uri <span class="op">=</span> []</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>artist_info <span class="op">=</span> []</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>artist_pop <span class="op">=</span> []</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>artist_genres <span class="op">=</span> []</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> track <span class="kw">in</span> sp.playlist_tracks(playlist_URI)[<span class="st">'items'</span>]:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Track id</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  track_id.append(track[<span class="st">'track'</span>][<span class="st">'id'</span>])</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Track name</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  track_name.append(track[<span class="st">"track"</span>][<span class="st">"name"</span>])</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Artist</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  artist_uri <span class="op">=</span> track[<span class="st">"track"</span>][<span class="st">"artists"</span>][<span class="dv">0</span>][<span class="st">"uri"</span>]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  artist_info <span class="op">=</span> sp.artist(artist_uri)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Name, popularity, genre</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  artist_name.append(track[<span class="st">"track"</span>][<span class="st">"artists"</span>][<span class="dv">0</span>][<span class="st">"name"</span>])</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  artist_pop.append(artist_info[<span class="st">"popularity"</span>])</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  artist_genres.append(artist_info[<span class="st">"genres"</span>])</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Popularity of the track</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  popularity.append(track[<span class="st">"track"</span>][<span class="st">"popularity"</span>])</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>audio <span class="op">=</span> sp.audio_features(track_id)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>audio_df <span class="op">=</span> pd.DataFrame(sp.audio_features(track_id))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>audio_df <span class="op">=</span> audio_df[[<span class="st">'acousticness'</span>,<span class="st">'danceability'</span>,<span class="st">'energy'</span>,<span class="st">'instrumentalness'</span>,<span class="st">'loudness'</span>,<span class="st">'speechiness'</span>,<span class="st">'tempo'</span>,<span class="st">'valence'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I have gathered the important data needed, which includes <strong>artist name, track name, track id, track popularity, artist popularity, artist genre, acousticness, danceability, energy, instrumentalness, loudness, speechiness, tempo, and valence</strong>. After gathering specific information, I put it together in a dataframe.</p>
+<section id="audio-features" class="level4">
+<h4 class="anchored" data-anchor-id="audio-features">Audio Features</h4>
+<ul>
+<li><p><strong>Acousticness</strong> represents how acoustic a track is. High confidence a track is acoustic is indicated by 1.0.</p></li>
+<li><p><strong>Danceability</strong> indicates how suitable a track is for dancing based on tempo, beat, strength, and other features. 1.0 is most danceable.</p></li>
+<li><p><strong>Energy</strong> represents the perceived measure of intensity and activity, with high energy track feeling fast and loud.</p></li>
+<li><p><strong>Instrumentalness</strong> indicates whether a track contains mostly instrumentals with no vocals. The higher the value is, the greater likelihood the track has no vocals.</p></li>
+<li><p><strong>Speechiness</strong> is determined by the presence of spoken words. High values represent tracks with mostly spoken words, for example, rap.</p></li>
+<li><p><strong>Tempo</strong> is the estimated BPM (beats per minute) of a track. High BPM indicates faster speed.</p></li>
+<li><p><strong>Valence</strong> describes the positiveness of a track. High valence tracks sound happy and low valence tracks sound sad.</p></li>
+</ul>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top50_df <span class="op">=</span> pd.DataFrame({<span class="st">'artist_name'</span> : artist_name,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'track_name'</span> : track_name,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'track_id'</span> : track_id,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'track popularity'</span>: popularity,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'artist popularity'</span>: artist_pop,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'artist genre'</span>: artist_genres,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'acousticness'</span>: <span class="bu">list</span>(audio_df[<span class="st">'acousticness'</span>]),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'danceability'</span>: <span class="bu">list</span>(audio_df[<span class="st">'danceability'</span>]),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'energy'</span>: <span class="bu">list</span>(audio_df[<span class="st">'energy'</span>]),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'instrumentalness'</span>:  <span class="bu">list</span>(audio_df[<span class="st">'instrumentalness'</span>]),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'loudness'</span>: <span class="bu">list</span>(audio_df[<span class="st">'loudness'</span>]),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'speechiness'</span>: <span class="bu">list</span>(audio_df[<span class="st">'speechiness'</span>]),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'tempo'</span>: <span class="bu">list</span>(audio_df[<span class="st">'tempo'</span>]),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'valence'</span>: <span class="bu">list</span>(audio_df[<span class="st">'valence'</span>])})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>top50_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>artist_name</th>
+      <th>track_name</th>
+      <th>track_id</th>
+      <th>track popularity</th>
+      <th>artist popularity</th>
+      <th>artist genre</th>
+      <th>acousticness</th>
+      <th>danceability</th>
+      <th>energy</th>
+      <th>instrumentalness</th>
+      <th>loudness</th>
+      <th>speechiness</th>
+      <th>tempo</th>
+      <th>valence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>KAROL G</td>
+      <td>TQG</td>
+      <td>0DWdj2oZMBFSzRsi2Cvfzf</td>
+      <td>93</td>
+      <td>94</td>
+      <td>[reggaeton, reggaeton colombiano, urbano latino]</td>
+      <td>0.6730</td>
+      <td>0.720</td>
+      <td>0.630</td>
+      <td>0.000000</td>
+      <td>-3.547</td>
+      <td>0.2770</td>
+      <td>179.974</td>
+      <td>0.607</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>The Weeknd</td>
+      <td>Die For You - Remix</td>
+      <td>7oDd86yk8itslrA9HRP2ki</td>
+      <td>93</td>
+      <td>99</td>
+      <td>[canadian contemporary r&amp;b, canadian pop, pop]</td>
+      <td>0.2320</td>
+      <td>0.531</td>
+      <td>0.525</td>
+      <td>0.000000</td>
+      <td>-6.500</td>
+      <td>0.0671</td>
+      <td>66.900</td>
+      <td>0.502</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Miley Cyrus</td>
+      <td>Flowers</td>
+      <td>0yLdNVWF3Srea0uzk55zFn</td>
+      <td>100</td>
+      <td>92</td>
+      <td>[pop]</td>
+      <td>0.0632</td>
+      <td>0.707</td>
+      <td>0.681</td>
+      <td>0.000005</td>
+      <td>-4.325</td>
+      <td>0.0668</td>
+      <td>117.999</td>
+      <td>0.646</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>SZA</td>
+      <td>Kill Bill</td>
+      <td>1Qrg8KqiBpW07V7PNxwwwL</td>
+      <td>93</td>
+      <td>95</td>
+      <td>[pop, r&amp;b]</td>
+      <td>0.0521</td>
+      <td>0.644</td>
+      <td>0.735</td>
+      <td>0.144000</td>
+      <td>-5.747</td>
+      <td>0.0391</td>
+      <td>88.980</td>
+      <td>0.418</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PinkPantheress</td>
+      <td>Boy's a liar Pt. 2</td>
+      <td>6AQbmUe0Qwf5PZnt4HmTXv</td>
+      <td>94</td>
+      <td>86</td>
+      <td>[]</td>
+      <td>0.2520</td>
+      <td>0.696</td>
+      <td>0.809</td>
+      <td>0.000128</td>
+      <td>-8.254</td>
+      <td>0.0500</td>
+      <td>132.962</td>
+      <td>0.857</td>
+    </tr>
+  </tbody>
+</table>
 </div>
 </div>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="op">+</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>7</code></pre>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>top50_df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>track popularity</th>
+      <th>artist popularity</th>
+      <th>acousticness</th>
+      <th>danceability</th>
+      <th>energy</th>
+      <th>instrumentalness</th>
+      <th>loudness</th>
+      <th>speechiness</th>
+      <th>tempo</th>
+      <th>valence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>87.160000</td>
+      <td>89.040000</td>
+      <td>0.235176</td>
+      <td>0.677320</td>
+      <td>0.652800</td>
+      <td>0.020879</td>
+      <td>-6.087180</td>
+      <td>0.093092</td>
+      <td>124.852020</td>
+      <td>0.493070</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>8.462064</td>
+      <td>6.449047</td>
+      <td>0.216901</td>
+      <td>0.132686</td>
+      <td>0.139459</td>
+      <td>0.098529</td>
+      <td>2.186116</td>
+      <td>0.079960</td>
+      <td>32.138261</td>
+      <td>0.226829</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>46.000000</td>
+      <td>74.000000</td>
+      <td>0.001460</td>
+      <td>0.442000</td>
+      <td>0.234000</td>
+      <td>0.000000</td>
+      <td>-14.520000</td>
+      <td>0.025400</td>
+      <td>66.900000</td>
+      <td>0.038500</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>86.000000</td>
+      <td>85.250000</td>
+      <td>0.063275</td>
+      <td>0.559500</td>
+      <td>0.556500</td>
+      <td>0.000000</td>
+      <td>-6.939500</td>
+      <td>0.043475</td>
+      <td>96.332250</td>
+      <td>0.305500</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>89.000000</td>
+      <td>89.000000</td>
+      <td>0.139500</td>
+      <td>0.687500</td>
+      <td>0.676500</td>
+      <td>0.000007</td>
+      <td>-5.673500</td>
+      <td>0.057200</td>
+      <td>125.968000</td>
+      <td>0.498000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>91.000000</td>
+      <td>94.000000</td>
+      <td>0.375750</td>
+      <td>0.781750</td>
+      <td>0.748000</td>
+      <td>0.000263</td>
+      <td>-4.892000</td>
+      <td>0.110250</td>
+      <td>142.261000</td>
+      <td>0.620250</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>100.000000</td>
+      <td>100.000000</td>
+      <td>0.777000</td>
+      <td>0.954000</td>
+      <td>0.965000</td>
+      <td>0.670000</td>
+      <td>-1.602000</td>
+      <td>0.326000</td>
+      <td>203.759000</td>
+      <td>0.962000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>top50_df.sort_values(by <span class="op">=</span> <span class="st">'track popularity'</span>)[<span class="op">-</span><span class="dv">10</span>:].plot.barh(x <span class="op">=</span> <span class="st">'artist_name'</span>, y <span class="op">=</span> <span class="st">'artist popularity'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>&lt;AxesSubplot: ylabel='artist_name'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="first_file_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>top50_df.sort_values(by <span class="op">=</span> <span class="st">'track popularity'</span>)[<span class="op">-</span><span class="dv">10</span>:].plot(y <span class="op">=</span> <span class="st">'valence'</span>, x <span class="op">=</span> <span class="st">'track popularity'</span>, kind <span class="op">=</span> <span class="st">"scatter"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>&lt;AxesSubplot: xlabel='track popularity', ylabel='valence'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="first_file_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>top50_df.plot(y <span class="op">=</span> <span class="st">'energy'</span>, kind <span class="op">=</span> <span class="st">'hist'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>&lt;AxesSubplot: ylabel='Frequency'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="first_file_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>top50_df[<span class="st">'energy'</span>].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>count    50.000000
+mean      0.652800
+std       0.139459
+min       0.234000
+25%       0.556500
+50%       0.676500
+75%       0.748000
+max       0.965000
+Name: energy, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>top50_df.sort_values(by <span class="op">=</span> <span class="st">'track popularity'</span>)[<span class="op">-</span><span class="dv">10</span>:].plot.barh(x <span class="op">=</span> <span class="st">'track_name'</span>, y <span class="op">=</span> <span class="st">'danceability'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre><code>&lt;AxesSubplot: ylabel='track_name'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="first_file_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
